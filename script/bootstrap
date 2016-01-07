@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+# Ensure bundler is installed
+# ----
+gem list -i bundler >/dev/null 2>&1
+rc=$?
+if [[ $rc != 0 ]]; then
+    gem install bundler
+fi
+
+# Install required ruby gems
+# ----
+cd "$(dirname "$0")/.."
+if bundle check 1>/dev/null 2>&1; then
+    echo "Gem environment up-to-date"
+else
+    bundle install --binstubs --path vendor/gems "$@"
+fi
