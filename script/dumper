@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require "time"
+require "objspace"
+
+if ARGV.empty?
+  $stderr.puts "Usage: dumper <script.rb>"
+  exit 1
+end
+
+begin
+  ObjectSpace.trace_object_allocations_start
+  load ARGV.shift
+ensure
+  ObjectSpace.trace_object_allocations_stop
+  GC.start
+  ObjectSpace.dump_all(output: File.open("#{Time.now.utc.iso8601}-heap.json", "w"))
+end
