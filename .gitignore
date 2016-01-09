@@ -1,0 +1,8 @@
+/.bundle
+/bin/amalgalite-pack
+/bin/rackup
+/bin/rake
+/bin/tilt
+/vendor
+Gemfile.lock
+*.gem
