@@ -23,7 +23,7 @@ install all the necessary dependencies.
 
 ```sh
 > git clone https://github.com/TwP/heap_hop.git
-> cd heap_dump
+> cd heap_hop
 > script/bootstrap
 ```
 

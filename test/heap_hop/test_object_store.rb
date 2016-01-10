@@ -26,7 +26,6 @@ describe HeapHop::ObjectStore do
     assert_equal 2, count("SELECT COUNT(*) FROM 'references'")
   end
 
-
   def count( sql )
     results = @store.db.execute(sql)
     results.first.first
