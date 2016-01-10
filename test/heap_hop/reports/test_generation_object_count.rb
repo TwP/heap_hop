@@ -6,9 +6,9 @@ describe HeapHop::Reports::GenerationObjectCount do
     filename = HeapHop.path("test/data/heap1.json")
     @parser  = HeapHop::HeapFileParser.new(filename)
     @store   = HeapHop::ObjectStore.new ":memory:"
-    @store.insert( @parser.each.take(1000) )
-    @db      = @store.db
 
+    @store.insert( @parser.each.take(1000) )
+    @db = @store.db
   end
 
   it "calculates the counts by generation" do

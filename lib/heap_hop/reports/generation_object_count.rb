@@ -23,9 +23,9 @@ module HeapHop
       def self.call(db)
         results = db.execute(<<-SQL)
           SELECT generation, COUNT(*) AS 'count'
-          FROM 'heap_objects'
-          GROUP BY 'generation'
-          ORDER BY 'generation' ASC
+          FROM heap_objects
+          GROUP BY generation
+          ORDER BY generation ASC
         SQL
         new(results)
       end
