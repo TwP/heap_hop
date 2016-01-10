@@ -22,7 +22,7 @@ Clone this repository (or make your own fork) and then run `script/bootstrap` to
 install all the necessary dependencies.
 
 ```sh
-> git clone https://github.com/TwP/heap_dump.git
+> git clone https://github.com/TwP/heap_hop.git
 > cd heap_dump
 > script/bootstrap
 ```
