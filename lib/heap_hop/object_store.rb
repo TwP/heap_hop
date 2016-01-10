@@ -39,6 +39,17 @@ module HeapHop
       self
     end
 
+    # Public: Remove all heap object entries from the SQLite tables.
+    #
+    # Returns this object store.
+    def purge!
+      db.transaction do |transaction|
+        transaction.execute("DELETE FROM 'heap_objects'")
+        transaction.execute("DELETE FROM 'references'")
+      end
+      self
+    end
+
     # Internal: Populate the `heap_objects` table for the given array of heap
     # objects.
     #

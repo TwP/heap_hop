@@ -1,5 +1,6 @@
 module HeapHop
   class HeapFileParser
+    include Enumerable
 
     HeapObject = Struct.new \
         :address, :generation, :references, :obj_type, :class_address,
