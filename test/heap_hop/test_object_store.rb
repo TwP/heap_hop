@@ -1,9 +1,9 @@
 require File.expand_path("../../test_helper", __FILE__)
 
-describe Heapr::ObjectStore do
+describe HeapHop::ObjectStore do
   before do
     # use an in-memory SQLite DB
-    @store = Heapr::ObjectStore.new ":memory:"
+    @store = HeapHop::ObjectStore.new ":memory:"
   end
 
   it "automatically creates tables" do

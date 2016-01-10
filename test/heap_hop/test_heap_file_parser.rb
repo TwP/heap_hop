@@ -1,9 +1,9 @@
 require File.expand_path("../../test_helper", __FILE__)
 
-describe Heapr::HeapFileParser do
+describe HeapHop::HeapFileParser do
   before do
-    filename = Heapr.path("test/data/heap1.json")
-    @parser = Heapr::HeapFileParser.new(filename)
+    filename = HeapHop.path("test/data/heap1.json")
+    @parser = HeapHop::HeapFileParser.new(filename)
   end
 
   it "returns an enumerator" do

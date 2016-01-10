@@ -1,5 +1,5 @@
-module Heapr
-  VERSION = "0.0.1"
+module HeapHop
+  VERSION = "0.0.1".freeze
 
   def self.version
     VERSION

@@ -8,7 +8,7 @@ require "minitest/reporters"
 
 # push the lib folder onto the load path
 $LOAD_PATH.unshift "lib"
-require "heapr"
+require "heap_hop"
 
 # add custom assertions
 #require File.expand_path("../assertions", __FILE__)
