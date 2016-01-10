@@ -6,8 +6,9 @@ describe Heapr::ObjectStore do
     @store = Heapr::ObjectStore.new ":memory:"
   end
 
-  it "creates tables automatically" do
+  it "automatically creates tables" do
     assert @store.has_table?("heap_objects")
     assert @store.has_table?("references")
   end
+
 end
