@@ -35,9 +35,20 @@ module HeapHop
       SQL
     end
 
-    def insert_heap_objects( heap_objects )
+    # Public:
+    #
+    # heap_objects
+    #
+    # Returns this object store.
+    def insert( heap_objects )
       heap_objects = [heap_objects] unless heap_objects.is_a? Array
+      insert_heap_objects(heap_objects)
+      insert_references(heap_objects)
+      self
+    end
 
+    # Internal:
+    def insert_heap_objects( heap_objects )
       sql = <<-SQL
         INSERT INTO 'heap_objects' ('address', 'generation', 'obj_type', 'class_address', 'file', 'line', 'method', 'flags', 'info')
         VALUES (:address, :generation, :obj_type, :class_address, :file, :line, :method, json(:flags), json(:info))
@@ -61,13 +72,10 @@ module HeapHop
           end
         end
       end
-
-      self
     end
 
+    # Internal:
     def insert_references( heap_objects )
-      heap_objects = [heap_objects] unless heap_objects.is_a? Array
-
       sql = <<-SQL
         INSERT INTO 'references' ('a', 'b') VALUES (:a, :b)
       SQL
@@ -85,8 +93,6 @@ module HeapHop
           end
         end
       end
-
-      self
     end
 
     #
