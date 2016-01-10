@@ -17,13 +17,18 @@ describe HeapHop::ObjectStore do
     line = %q/{"address":"0x7f8c71a45768","type":"HASH","generation":3,"class":"0x7f8c718dd8f8","size":2,"references":["0x7f8c71a456a0","0x7f8c71a450b0"],"memsize":200,"flags":{"wb_protected":true}}/
     obj = @parser.parse_line(line)
 
-    assert_equal 0, @store.count("SELECT COUNT(*) FROM 'heap_objects'")
-    assert_equal 0, @store.count("SELECT COUNT(*) FROM 'references'")
+    assert_equal 0, count("SELECT COUNT(*) FROM 'heap_objects'")
+    assert_equal 0, count("SELECT COUNT(*) FROM 'references'")
 
     @store.insert obj
 
-    assert_equal 1, @store.count("SELECT COUNT(*) FROM 'heap_objects'")
-    assert_equal 2, @store.count("SELECT COUNT(*) FROM 'references'")
+    assert_equal 1, count("SELECT COUNT(*) FROM 'heap_objects'")
+    assert_equal 2, count("SELECT COUNT(*) FROM 'references'")
   end
 
+
+  def count( sql )
+    results = @store.db.execute(sql)
+    results.first.first
+  end
 end

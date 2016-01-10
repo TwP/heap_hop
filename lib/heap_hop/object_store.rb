@@ -16,28 +16,10 @@ module HeapHop
       tables.include? name
     end
 
-    def stupid
-      db.execute <<-SQL
-        WITH RECURSIVE transitive_closure(a, b, distance, path_string) AS
-        ( SELECT a, b, 1 AS distance,
-            a || '.' || b || '.' AS path_string
-          FROM 'references'
-          UNION ALL
-          SELECT tc.a, e.b, tc.distance + 1,
-          tc.path_string || e.b || '.' AS path_string
-          FROM 'references' AS e
-            JOIN transitive_closure AS tc
-              ON e.a = tc.b
-          WHERE tc.path_string NOT LIKE '%' || e.b || '.%'
-        )
-        SELECT * FROM transitive_closure
-        ORDER BY a, b, distance;
-      SQL
-    end
-
-    # Public:
+    # Public: Primary method for inserting heap objects into the SQLite
+    # datastore.
     #
-    # heap_objects
+    # heap_objects - An Array of HeapObjects from the heap file parser
     #
     # Returns this object store.
     def insert( heap_objects )
@@ -47,7 +29,12 @@ module HeapHop
       self
     end
 
-    # Internal:
+    # Internal: Populate the `heap_objects` table for the given array of heap
+    # objects.
+    #
+    # heap_objects - An Array of HeapObjects from the heap file parser
+    #
+    # Returns the results of the SQL transaction.
     def insert_heap_objects( heap_objects )
       sql = <<-SQL
         INSERT INTO 'heap_objects' ('address', 'generation', 'obj_type', 'class_address', 'file', 'line', 'method', 'flags', 'info')
@@ -74,7 +61,12 @@ module HeapHop
       end
     end
 
-    # Internal:
+    # Internal: Populate the `references` table for the given array of heap
+    # objects.
+    #
+    # heap_objects - An Array of HeapObjects from the heap file parser
+    #
+    # Returns the results of the SQL transaction.
     def insert_references( heap_objects )
       sql = <<-SQL
         INSERT INTO 'references' ('a', 'b') VALUES (:a, :b)
