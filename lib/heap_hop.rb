@@ -2,7 +2,7 @@ require 'amalgalite'
 require 'multi_json'
 require 'oj'
 
-module Heapr
+module HeapHop
 
   PATH = File.expand_path("../..", __FILE__).freeze
   LIBPATH = File.join(PATH, "lib").freeze
@@ -18,7 +18,7 @@ module Heapr
   end
 end
 
-require "heapr/heap_file_parser"
-require "heapr/object_store"
-require "heapr/version"
+require "heap_hop/heap_file_parser"
+require "heap_hop/object_store"
+require "heap_hop/version"
 

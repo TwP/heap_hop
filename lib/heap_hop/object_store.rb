@@ -1,4 +1,4 @@
-module Heapr
+module HeapHop
   class ObjectStore
 
     attr_reader :db
