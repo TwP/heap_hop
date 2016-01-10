@@ -33,6 +33,16 @@ describe HeapHop::ObjectStore do
     assert_equal 74729, count("SELECT COUNT(*) FROM 'references'")
   end
 
+  it "knows if the tables are emtpy" do
+    assert @store.empty?
+
+    line = %q/{"address":"0x7f8c71a45768","type":"HASH","generation":3,"class":"0x7f8c718dd8f8","size":2,"references":["0x7f8c71a456a0","0x7f8c71a450b0"],"memsize":200,"flags":{"wb_protected":true}}/
+    obj = @parser.parse_line(line)
+    @store.insert obj
+
+    refute @store.empty?
+  end
+
   def count( sql )
     results = @store.db.execute(sql)
     results.first.first

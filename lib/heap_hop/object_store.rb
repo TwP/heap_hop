@@ -12,8 +12,18 @@ module HeapHop
       db.schema.tables.keys
     end
 
+    #
+    #
     def has_table?( name )
       tables.include? name
+    end
+
+    # Returns `true` if there are not objects in the `heap_objects` SQL table.
+    def empty?
+      results = db.execute <<-SQL
+        SELECT COUNT(*) FROM 'heap_objects';
+      SQL
+      results.first.first == 0
     end
 
     # Public: Primary method for inserting heap objects into the SQLite
