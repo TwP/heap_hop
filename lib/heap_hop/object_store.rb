@@ -55,7 +55,7 @@ module HeapHop
               ":flags"         => MultiJson.dump(obj.flags),
               ":info"          => MultiJson.dump(obj.info)
             }
-            transaction.execute(sql, params)
+            statement.execute(params)
           end
         end
       end
