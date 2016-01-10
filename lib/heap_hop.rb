@@ -22,4 +22,5 @@ require "heap_hop/analyzer"
 require "heap_hop/heap_file_parser"
 require "heap_hop/object_store"
 require "heap_hop/version"
+require "heap_hop/reports"
 
