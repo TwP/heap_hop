@@ -26,6 +26,13 @@ describe HeapHop::ObjectStore do
     assert_equal 2, count("SELECT COUNT(*) FROM 'references'")
   end
 
+  it "populates from a parsed heap dump" do
+    @parser.each.each_slice(100) { |ary| @store.insert(ary) }
+
+    assert_equal 37512, count("SELECT COUNT(*) FROM 'heap_objects'")
+    assert_equal 74729, count("SELECT COUNT(*) FROM 'references'")
+  end
+
   def count( sql )
     results = @store.db.execute(sql)
     results.first.first
