@@ -3,6 +3,8 @@ require "pathname"
 module HeapHop
   class Analyzer
 
+    BATCH_SIZE = 100
+
     attr_reader :heap_filename
 
     #
@@ -39,7 +41,7 @@ module HeapHop
       object_store.purge! if force
 
       if object_store.empty?
-        parser.each.each_slice(100) { |ary| object_store.insert(ary) }
+        parser.each.each_slice(BATCH_SIZE) { |ary| object_store.insert(ary) }
       end
 
       self
