@@ -80,7 +80,7 @@ module HeapHop
             next if references.nil? || references.empty?
 
             references.uniq.each do |reference|
-              transaction.execute(sql, {":a" => address, ":b" => reference})
+              statement.execute({":a" => address, ":b" => reference})
             end
           end
         end
