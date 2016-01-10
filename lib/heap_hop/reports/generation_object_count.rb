@@ -25,7 +25,7 @@ module HeapHop
           SELECT generation, COUNT(*) AS 'count'
           FROM 'heap_objects'
           GROUP BY 'generation'
-          ORDER BY 'generation' DESC
+          ORDER BY 'generation' ASC
         SQL
         new(results)
       end
