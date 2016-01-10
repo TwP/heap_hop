@@ -55,7 +55,6 @@ describe HeapHop::ObjectStore do
   end
 
   def count( sql )
-    results = @store.db.execute(sql)
-    results.first.first
+    @store.db.first_value_from(sql)
   end
 end
