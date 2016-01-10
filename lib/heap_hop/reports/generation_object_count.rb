@@ -7,9 +7,9 @@ module HeapHop
 
       def initialize(results)
         @raw_results = results
-        @counts = results.each_with_object({}) { |row, acc|
+        @counts = results.each_with_object({}) do |row, acc|
           acc[row["generation"]] = row["count"]
-        }
+        end
       end
 
       def generation_count
@@ -22,11 +22,10 @@ module HeapHop
 
       def self.call(db)
         results = db.execute(<<-SQL)
-        SELECT generation
-              ,count(*) as count
-          FROM heap_objects
-      GROUP BY generation
-      ORDER BY generation ASC
+          SELECT generation, COUNT(*) AS 'count'
+          FROM 'heap_objects'
+          GROUP BY 'generation'
+          ORDER BY 'generation' DESC
         SQL
         new(results)
       end
