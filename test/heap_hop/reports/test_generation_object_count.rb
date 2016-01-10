@@ -7,7 +7,7 @@ describe HeapHop::Reports::GenerationObjectCount do
     @parser  = HeapHop::HeapFileParser.new(filename)
     @store   = HeapHop::ObjectStore.new ":memory:"
 
-    @store.insert( @parser.each.take(1000) )
+    @store.insert(@parser.each.take(1000))
     @db = @store.db
   end
 
