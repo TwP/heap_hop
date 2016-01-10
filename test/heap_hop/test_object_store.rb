@@ -43,6 +43,17 @@ describe HeapHop::ObjectStore do
     refute @store.empty?
   end
 
+  it "purges the tables" do
+    assert @store.empty?
+
+    ary = @parser.each.take(100)
+    @store.insert(ary)
+
+    assert_equal 100, count("SELECT COUNT(*) FROM 'heap_objects'")
+    @store.purge!
+    assert_equal 0, count("SELECT COUNT(*) FROM 'heap_objects'")
+  end
+
   def count( sql )
     results = @store.db.execute(sql)
     results.first.first
