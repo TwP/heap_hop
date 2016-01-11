@@ -54,7 +54,7 @@ module HeapHop
       db_time   = db_file_exists?   ? File.mtime(db_filename)   : nil
 
       if heap_time && db_time
-        heap_time < db_time
+        heap_time < db_time    # is the DB newer than the heap file
       elsif db_file_exists?
         true
       else
