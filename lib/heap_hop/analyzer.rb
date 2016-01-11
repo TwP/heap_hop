@@ -26,6 +26,33 @@ module HeapHop
       end
     end
 
+    #
+    #
+    # name - A report name as a String.
+    #
+    # Raises an ArgumentError if the report name is invalid.
+    def report( name )
+      clazz = report_class_by_name(name)
+      clazz.call(db)
+    rescue NameError
+      raise ArgumentError, "Unkonwn report: #{name.inspect}"
+    end
+
+    # Internal:
+    #
+    # name - A report name as a String.
+    #
+    # Returns the report class.
+    # Raises a NameError if the class does not exist.
+    def report_class_by_name( name )
+      string = name.to_s
+      string = string.sub(/^[a-z\d]*/) { $&.capitalize }
+      string.gsub!(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{$2.capitalize}" }
+      string.gsub!(/\//, '::')
+
+      HeapHop::Reports.const_get(string)
+    end
+
     # Returns the name of the SQLite DB file as a String.
     def db_filename
       return @db_filename unless @db_filename.nil?
