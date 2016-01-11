@@ -26,10 +26,17 @@ module HeapHop
       end
     end
 
+    # Public: Generate a report from the data stored in the SQLite DB. Reports
+    # are identified by name where the name maps to a report class. For example,
+    # "generation_object_count" maps to the
+    # HeapHop::Reports::GenerationObjectCount class. The returned report
+    # instance can then be queried for the desired information.
     #
+    # This method serves as a generic itnerface to all the report types.
     #
     # name - A report name as a String.
     #
+    # Returns a report instance.
     # Raises an ArgumentError if the report name is invalid.
     def report( name )
       clazz = report_class_by_name(name)
@@ -38,7 +45,8 @@ module HeapHop
       raise ArgumentError, "Unkonwn report: #{name.inspect}"
     end
 
-    # Internal:
+    # Internal: Given a report name, map that string to the corresponding report
+    # class.
     #
     # name - A report name as a String.
     #
