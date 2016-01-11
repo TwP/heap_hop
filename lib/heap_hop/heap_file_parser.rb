@@ -4,7 +4,7 @@ module HeapHop
 
     HeapObject = Struct.new \
         :address, :generation, :references, :obj_type, :class_address,
-        :file, :line, :method, :flags, :info
+        :file, :line, :method, :memsize, :flags, :info
 
     attr_reader :filename
 
@@ -53,6 +53,7 @@ module HeapHop
       file          = hash.delete("file")
       line          = hash.delete("line")
       method        = hash.delete("method")
+      memsize       = hash["memsize"] || hash["bytesize"]
       flags         = hash.delete("flags")
 
       address = convert_address(address)
@@ -61,7 +62,7 @@ module HeapHop
 
       HeapObject.new \
         address, generation, references, obj_type, class_address,
-        file, line, method, flags, hash
+        file, line, method, memsize, flags, hash
     end
 
     # Internal: Convert a memory address to an Integer value.

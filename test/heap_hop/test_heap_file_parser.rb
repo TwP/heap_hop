@@ -29,6 +29,7 @@ describe HeapHop::HeapFileParser do
     assert_nil obj.file
     assert_nil obj.line
     assert_nil obj.method
+    assert_nil obj.memsize
     assert_nil obj.flags
     assert_equal({"root" => "vm"}, obj.info)
 
@@ -43,6 +44,7 @@ describe HeapHop::HeapFileParser do
     assert_nil obj.file
     assert_nil obj.line
     assert_nil obj.method
+    assert_equal 200, obj.memsize
     assert_equal({"wb_protected" => true}, obj.flags)
     assert_equal({"size" => 2, "memsize" => 200}, obj.info)
   end

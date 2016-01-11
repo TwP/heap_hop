@@ -58,8 +58,8 @@ module HeapHop
     # Returns the results of the SQL transaction.
     def insert_heap_objects( heap_objects )
       sql = <<-SQL
-        INSERT INTO 'heap_objects' ('address', 'generation', 'obj_type', 'class_address', 'file', 'line', 'method', 'flags', 'info')
-        VALUES (:address, :generation, :obj_type, :class_address, :file, :line, :method, json(:flags), json(:info))
+        INSERT INTO 'heap_objects' ('address', 'generation', 'obj_type', 'class_address', 'file', 'line', 'method', 'memsize', 'flags', 'info')
+        VALUES (:address, :generation, :obj_type, :class_address, :file, :line, :memsize, :method, json(:flags), json(:info))
       SQL
 
       db.transaction do |transaction|
@@ -73,6 +73,7 @@ module HeapHop
               ":file"          => obj.file,
               ":line"          => obj.line,
               ":method"        => obj.method,
+              ":memsize"       => obj.memsize,
               ":flags"         => MultiJson.dump(obj.flags),
               ":info"          => MultiJson.dump(obj.info)
             }
@@ -121,6 +122,7 @@ module HeapHop
             'file'           TEXT,
             'line'           INTEGER,
             'method'         TEXT,
+            'memsize'        INTEGER,
             'flags'          TEXT,
             'info'           TEXT
           );
