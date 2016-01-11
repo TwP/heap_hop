@@ -3,7 +3,7 @@ require "pathname"
 module HeapHop
   class Analyzer
 
-    BATCH_SIZE = 100
+    BATCH_SIZE = 300
 
     attr_reader :heap_filename
 

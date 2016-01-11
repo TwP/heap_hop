@@ -27,7 +27,7 @@ describe HeapHop::ObjectStore do
   end
 
   it "populates from a parsed heap dump" do
-    @parser.each.each_slice(100) { |ary| @store.insert(ary) }
+    @parser.each.each_slice(300) { |ary| @store.insert(ary) }
 
     assert_equal 37512, count("SELECT COUNT(*) FROM 'heap_objects'")
     assert_equal 74729, count("SELECT COUNT(*) FROM 'references'")

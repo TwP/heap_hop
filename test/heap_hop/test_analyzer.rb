@@ -35,4 +35,6 @@ describe HeapHop::Analyzer do
       refute analyzer.object_store.empty?
     end
   end
+
+
 end
