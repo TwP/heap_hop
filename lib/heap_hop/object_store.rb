@@ -59,7 +59,7 @@ module HeapHop
     def insert_heap_objects( heap_objects )
       sql = <<-SQL
         INSERT INTO 'heap_objects' ('address', 'generation', 'obj_type', 'class_address', 'file', 'line', 'method', 'memsize', 'flags', 'info')
-        VALUES (:address, :generation, :obj_type, :class_address, :file, :line, :memsize, :method, json(:flags), json(:info))
+        VALUES (:address, :generation, :obj_type, :class_address, :file, :line, :method, :memsize, json(:flags), json(:info))
       SQL
 
       db.transaction do |transaction|
