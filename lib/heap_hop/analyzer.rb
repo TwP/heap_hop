@@ -34,13 +34,15 @@ module HeapHop
     #
     # This method serves as a generic itnerface to all the report types.
     #
-    # name - A report name as a String.
+    # name  - A report name as a String.
+    # args  - Optional arguments to pass to the reporter `call` method.
+    # block - Optional block to pass to the reporter `call` method.
     #
     # Returns a report instance.
     # Raises an ArgumentError if the report name is invalid.
-    def report( name )
+    def report( name, *args, &block )
       clazz = report_class_by_name(name)
-      clazz.call(db)
+      clazz.call(db, *args, &block)
     rescue NameError
       raise ArgumentError, "Unkonwn report: #{name.inspect}"
     end
