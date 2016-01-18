@@ -1,37 +1,59 @@
 require "optparse"
-require "sinatra"
+require "sinatra/base"
 
 module HeapHop
-  class App
+  class App < Sinatra::Base
 
-    #
-    #
+    get "/" do
+      content_type :text
+      "Hello There! - #{analyzer.inspect}"
+    end
+
+    def analyzer
+      self.class.analyzer
+    end
+
     def self.run( args )
-      new.parse(args).run
+      options = parse(args)
+      analyze_heap(options)
+      run!(options)
     end
 
-    #
-    #
-    def initialize
-      @heap = nil
-      @db   = nil
-      @port = 8042
+    def self.analyze_heap( options )
+      print "Analyzing heap ..."
+      @analyzer = Analyzer.new(heap: options[:heap], db: options[:db])
+      puts " done!"
+      self
+    rescue RuntimeError => err
+      puts " #{err.message}"
+      exit 1
     end
 
-    # Public: Parse the give arguments and store the settings for later.
+    def self.analyzer
+      @analyzer
+    end
+
+    # Parse the give arguments and store the settings for later.
     #
     # args - The command line arguments as an Array
     #
     # Returns this App instance.
-    def parse( args )
+    def self.parse( args )
+      options = {
+        heap: nil,
+        db:   nil,
+        port: 8042
+      }
+
       parser = OptionParser.new do |opts|
         opts.banner = "Usage: heap-hop [options]"
 
         opts.separator "  either a heap or db filename must be given"
         opts.separator ""
 
-        opts.on('-h', '--heap heap', 'Heap') { |heap| @heap = heap }
-        opts.on('-d', '--db db', 'Database') { |db| @db = db }
+        opts.on('-h', '--heap heap', 'Heap') { |heap| options[:heap] = heap }
+        opts.on('-d', '--db db', 'Database') { |db| options[:db] = db }
+        opts.on('-p', '--port port', 'Port', Integer) { |port| options[:port] = port }
 
         opts.on('--help', 'Show Help') do
           puts opts
@@ -41,18 +63,12 @@ module HeapHop
 
       parser.parse!(args)
 
-      if @heap.nil? && @db.nil?
+      if options[:heap].nil? && options[:db].nil?
         puts parser
         exit 1
       end
 
-      self
-    end
-
-    #
-    #
-    def run
-      self
+      options
     end
   end
 end
