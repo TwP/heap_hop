@@ -1,6 +1,6 @@
-require 'amalgalite'
-require 'multi_json'
-require 'oj'
+require "amalgalite"
+require "multi_json"
+require "oj"
 
 module HeapHop
 
@@ -27,6 +27,7 @@ module HeapHop
 end
 
 require "heap_hop/analyzer"
+require "heap_hop/app"
 require "heap_hop/heap_file_parser"
 require "heap_hop/object_store"
 require "heap_hop/version"

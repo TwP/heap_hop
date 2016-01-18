@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+begin
+  require "amalgalite"
+rescue LoadError
+  require "bundler/setup"
+  require "amalgalite"
+end
+
+require File.expand_path("../../lib/heap_hop", __FILE__)
+HeapHop::App.run(ARGV)
