@@ -3,10 +3,15 @@ require "sinatra/base"
 
 module HeapHop
   class App < Sinatra::Base
+    configure do
+      set :threaded, false
+      set :public_dir, HeapHop.path("public")
+      set :views, HeapHop.path("views")
+    end
 
     get "/" do
-      content_type :text
-      "Hello There! - #{analyzer.inspect}"
+      content_type :html
+      erb :index
     end
 
     def analyzer
@@ -51,11 +56,11 @@ module HeapHop
         opts.separator "  either a heap or db filename must be given"
         opts.separator ""
 
-        opts.on('-h', '--heap heap', 'Heap') { |heap| options[:heap] = heap }
-        opts.on('-d', '--db db', 'Database') { |db| options[:db] = db }
-        opts.on('-p', '--port port', 'Port', Integer) { |port| options[:port] = port }
+        opts.on("-h", "--heap heap", "Heap") { |heap| options[:heap] = heap }
+        opts.on("-d", "--db db", "Database") { |db| options[:db] = db }
+        opts.on("-p", "--port port", "Port", Integer) { |port| options[:port] = port }
 
-        opts.on('--help', 'Show Help') do
+        opts.on("--help", "Show Help") do
           puts opts
           exit
         end
